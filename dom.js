@@ -77,6 +77,8 @@ function generateAutoCard(brand, color, year) {
     `
 }
 
+console.log(generateAutoCard('volvo', 'pink', 2023));
+
 // ${brand.toUpperCase()}
 
 // Функция должна возвращать разметку HTML:
