@@ -67,20 +67,17 @@ pDivReal.children[0].remove();
 
 // Создать функцию generateAutoCard,
 // которая принимает 3 аргумента: brand, color, year
-
 function generateAutoCard(brand, color, year) {
+    const curDate = new Date;
+    const curYear = curDate.getFullYear();
+
     return `
-        <div class="autoCard">
-            <h2>${year}</h2>
-            <p>Автомобиль ${brand} - ${year} года. Возраст авто - YEARS лет.</p>
+        <div class="autoCard" style="color: black">
+            <h2>${brand.toUpperCase()} ${year}</h2>
+            <p>Автомобиль ${brand.toUpperCase()} - ${year} года. Возраст авто - ${curYear - year} лет.</p>
         </div>
     `
 }
-
-console.log(generateAutoCard('volvo', 'pink', 2023));
-
-// ${brand.toUpperCase()}
-
 // Функция должна возвращать разметку HTML:
 // <div class="autoCard">
 //   <h2>BRAND YEAR</h2>
@@ -91,12 +88,6 @@ console.log(generateAutoCard('volvo', 'pink', 2023));
 let autos = document.createElement('div');
 autos.classList.add('autos');
 
-document.body.appendChild(autos);
-
-let asd = generateAutoCard(2023);
-
-autos.innerHTML = asd;
-
 // Создать 3 карточки авто, используя функцию generateAutoCard
 const carsList = [
     {brand: 'Tesla', year: 2015, color: 'Красный'},
@@ -104,13 +95,66 @@ const carsList = [
     {brand: 'Nissan', year: 2012, color: 'Черный'},
 ]
 
+const cards = carsList.map((car)=> {
+    return generateAutoCard(car.brand, car.color, car.year);
+}).join('');
+
 // Поместить эти 3 карточки внутрь DIV с классом autos
+autos.innerHTML = cards;
 
 // Поместить DIV c классом autos на страницу DOM - до DIV с классом wrapper
+div.insertAdjacentElement('beforebegin', autos);
 
 // Добавить кнопку Удалить на каждую карточку авто
+const autosCards = document.querySelectorAll('.autoCard');
+
+autosCards.forEach((elem) => {
+    const btn = document.createElement('button');
+    btn.classList.add('autos__btn');
+    btn.style.width = '80px';
+    btn.style.height = '30px';
+    btn.style.backgroundColor = 'black';
+    btn.textContent = 'Удалить';
+
+    elem.appendChild(btn);
+});
+
+// const btns = document.querySelectorAll('.autos__btn');
+
+// autosCards.forEach((elem) => {
+//     elem.addEventListener('click', (e)=> {
+//         console.log('This is autosCards');
+//         // e.target.remove();
+//     });
+// });
+
+
+// btns.forEach((elem) => {
+//     elem.addEventListener('click', (e)=> {
+//         // e.stopPropagation();
+//         console.log('This is btns - 1');
+//         // e.target.remove();
+//     }, true);
+// });
+
+// btns.forEach((elem) => {
+//     elem.addEventListener('click', (e)=> {
+//         console.log('This is btns -2');
+//         // e.target.remove();
+//     });
+// });
 
 // При клике на кнопку - удалять карточку из структуры DOM
 // 1. Выбрать все кнопки
+const btns = document.querySelectorAll('.autos__btn');
 // 2. Создать функцию удаления
+function removeElem(e) {
+    let curTarget = e.currentTarget;
+    curTarget.closest('.autoCard').remove();
+}
 // 3. Использовать цикл - чтобы повесить обработчик события на каждую кнопку
+btns.forEach((elem) => {
+    elem.addEventListener('click', (e)=> {
+        removeElem(e);
+    });
+});
