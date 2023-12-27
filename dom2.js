@@ -58,6 +58,46 @@ $__btnGreen.addEventListener('click', () => {
     $__loveWeDoLink.style.color = 'green';
 });
 
+
+function generateBtn(className, innerText, width, height) {
+    const widthDefault = '150px';
+    const heightDefault = '20px';
+
+    let $__width = width || widthDefault;
+    let $__height = height || heightDefault;
+
+    return `
+        <button class="${className}" style="display: block; cursor: pointer; width: ${$__width}; height: ${$__height}">${innerText}</button>
+    `
+}
+
+let btnsList = [
+    {className: 'btn-prev btn-default', innerText: 'Назад', width: '100px', height: '30px'},
+    {className: 'btn-start btn-default', innerText: 'Пуск', width: '170px', height: '30px'},
+    {className: 'btn-next btn-default', innerText: 'Вперед', width: '100px', height: '30px'},
+]
+
+
+let btns = btnsList.map((btn)=>{
+    return generateBtn(btn.className, btn.innerText, btn.width, btn.height);
+}).join('');
+
+$__loveWeDoContent.insertAdjacentHTML('beforeend', btns);
+
+let arr = [1, 2, 3, 4, 5];
+
+console.log(arr.length);
+
+for (let i = 0; i <= 10; i++) {
+    
+    console.log(i);
+}
+
+
+
+
+
+
 // <!-- ======= love-we-do START ======= -->
 // <section class="love-we-do">
 //     <div class="container">
